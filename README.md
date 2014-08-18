@@ -29,7 +29,7 @@ Note that the given url does not need a callback parameter. It will be set autom
 
 1. Open your Browser
 
-2. Open a non javascript intensive page; e.g. http://robertodecurnex.github.com/
+2. Open a non javascript intensive page; e.g. http://zillwc.com/
 
 3. Open the console by pressing F12 or whatever key your browser use. You may need to select tab 'Console' (tested on Chrome and Internet Explorer 10)
 
@@ -57,3 +57,10 @@ J50Npi.getJSON({
 ```
 
 You should see an alert saying your current (ip based location) country name after half a second or so.
+
+
+## Credit
+
+Original source credit: 
+Roberto Decurnex (nex.development@gmail.com)
+https://github.com/robertodecurnex/J50Npi
