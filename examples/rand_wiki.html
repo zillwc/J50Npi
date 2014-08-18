@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><title>Random Extract</title></head>
+<body>
+<h4>Fetch random extract of text from Wikipedia</h4>
+<button type="button" id="button" onclick="fetchExtract();">Get Extract</button><br />
+<div id="output"></div>
+
+<script type="text/javascript" src="../src/J50Npi.js"></script>
+<script type="text/javascript">
+
+	var button = document.getElementById("button");
+	var output = document.getElementById("output");
+
+	var url = "http://en.wikipedia.org/w/api.php";
+	var data = {
+		action: "query",
+		generator: "random",
+		prop: "extracts",
+		exchars: 500,
+		format: "json",
+		requestid: Math.floor(Math.random()*999999).toString()
+	};
+	var callback = handleResponse;
+
+	// Function makes the call
+	function fetchExtract() {
+		button.disabled = true;
+		J50Npi.getJSON({
+			url: url,			// URL
+			data: data,			// Data Parameters
+			callback: callback,	// Callback Function
+			debugMode: true		// Debug Mode Enabled
+		});
+	}
+
+	// Callback function handles the response
+	function handleResponse(resp) {
+		var s = getFirstProp(resp.query.pages).extract;
+		s = htmlDecode(stripTags(s));
+		if (s.length > 100) {
+			output.innerHTML = s;
+			button.disabled = false;
+		}
+		else {
+			console.log("Content not long enough, fetching again");
+			fetchExtract();
+		}
+	}
+    
+
+    function getFirstProp(obj) {
+      for (var i in obj) return obj[i];
+    }  
+    function stripTags(s) {
+      return s.replace(/<\w+(\s+("[^"]*"|'[^']*'|[^>])+)?>|<\/\w+>/gi, "");
+    }
+    function htmlDecode(input){
+      var e = document.createElement("div");
+      e.innerHTML = input;
+      return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+    }
+</script>
+</body>
+</html>

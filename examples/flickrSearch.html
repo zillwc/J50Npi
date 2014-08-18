@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><title>Flickr Search</title></head>
+<style type="text/css">img{width: 100px;height:100px;}</style>
+<body>
+<h4>Flickr: search a topic</h4>
+<input type="text" id="input" placeholder="e.g. Cats" />
+<button onclick="fetch();">Fetch Images</button>
+<div id="output"></div>
+
+<script type="text/javascript" src="../src/J50Npi.js"></script>
+<script type="text/javascript">
+	var input = document.getElementById("input");
+	var output = document.getElementById("output");
+
+	function fetch() {
+		var tag = (input.value !== '') ? input.value : prompt("Please enter a topic to search", "Cats");
+		var url = "http://api.flickr.com/services/feeds/photos_public.gne";
+		var params = {
+			tags: tag,
+			tagmode: "any",
+			format: "json"
+		};
+
+		// Specifying a parameter name since flickr doesn't accept "callback" (default)
+		var paramName = "jsoncallback";
+
+		// Making the call
+		J50Npi.getJSON({
+			url: url, 
+			data: params, 
+			callback: displayImages,
+			callbackParamName: paramName
+		});
+	}
+
+	// Callback function
+	function displayImages(resp) {
+		console.log(resp);
+		output.innerHTML = "";
+		var items = resp.items;
+
+		for (var i in items) {
+			var src = items[i].media.m;
+
+			var img = document.createElement("img");
+			img.setAttribute("src", src);
+			output.appendChild(img);
+		}
+	}
+</script>
+</body>
+</html>
