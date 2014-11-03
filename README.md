@@ -10,7 +10,7 @@ var data_params = {};
 var callback_function = function(data){ alert(data.attribute_name)};
 
 J50Npi.getJSON({
-	url: url, 
+	url: request_url, 
 	data: data_params, 
 	callback: callback_function
 });
